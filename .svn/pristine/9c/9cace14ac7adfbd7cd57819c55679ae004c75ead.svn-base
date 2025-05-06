@@ -1,9 +1,0 @@
--- begin
--- desc: 用名字作为参数问候一个人
--- param: {'name': 'name', 'type': 'string', 'desc': '要问候的人的名字', 'require': True}
--- end
-
-function go(params)
-	return "abc"
-end
-
