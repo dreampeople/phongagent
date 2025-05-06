@@ -1,0 +1,42 @@
+import socket
+import asyncio
+from melonlib.maconn import maconnserver
+from AgentConn import AgentConn
+
+class AgentServer(maconnserver):
+    def __init__(self, conn, addr):
+        super().__init__(conn, addr)
+        self.brain = None
+
+    def getBrain(self):
+        if self.brain != None: return self.brain
+
+        self.brain = AgentBrain("Agent")
+        self.brain.addTool(GreetTool(self.conn))
+        return self.brain
+
+    async def runLoop(self, bType):
+        '''
+        当客户端连接时，会调用这个函数，处理业务逻辑
+        '''
+
+        if bType == 0:
+            pass
+
+    async def runEnd(self):
+        '''
+        当客户端断开连接时，会调用这个函数
+        '''
+        pass
+
+    @staticmethod
+    async def startRun(conn, addr):
+        '''
+        服务器启动时，会调用这个函数，处理业务逻辑
+        '''
+
+        ss = AgentServer(conn, addr)
+        try:
+            await ss.run()
+        except:
+            conn.close()

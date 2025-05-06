@@ -1,0 +1,43 @@
+syntax = "proto3";
+package bytedance_growth_rta;
+
+message CaidInfo {
+    string caid1 = 1;           // 高版本的caid原值
+    string caid_version1 = 2;   // 高版本caid的版本名
+    string caid2 = 3;           // 低版本的caid原值
+    string caid_version2 = 4;   // 低版本caid的版本名
+}
+
+message DeviceInfo {
+    string device_model = 1;    // 机型
+    string oaid = 2;            // oaid原值
+    string oaid_md5 = 3;        // oaid原值的md5
+    string imei = 4;            // imei原值
+    string imei_md5 = 5;        // imei原值的md5
+    string idfa = 6;            // idfa原值
+    string idfa_md5 = 7;        // idfa原值的md5
+    CaidInfo caid_info = 8;     // caid信息
+}
+
+message Request {
+    string name = 1;                    // 必传。媒体名称，接入前约定
+    string request_id = 2;              // 必传。请求id。如果有点击归因，请在点击链接中回传
+    repeated string rta_tokens = 3;     // 必传。rta策略标识。response中将回复每一个rta_token的参竞和出价系数
+    DeviceInfo device_info = 4;         // 必传。设备信息
+    string rit = 5;                     // 选传。广告位
+    string ip = 6;                      // 选传。用户的ip
+    string ua = 7;                      // 选传。用户的user agent
+    map<string, string> user_label = 8; // 选传。用户标签，各渠道自定义
+}
+
+message RtaResult {
+    bool is_bid = 1;                    // 是否参竞
+    double price_score = 2;             // 出价系数
+    repeated int64 vids = 3;            // 广告主对用户的分组，联合实验用
+}
+
+message Response  {
+    int32 status_code = 1;                  // 0代表成功，其他表示错误 
+    string msg = 2; // 错误消息
+    map<string, RtaResult> rta_results = 3; // 每个rta_token的参竞结果
+}

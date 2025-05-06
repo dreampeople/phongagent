@@ -1,0 +1,4 @@
+function go(params)
+	return "hello " .. params.name .. " !"
+end
+

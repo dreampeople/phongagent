@@ -1,0 +1,18 @@
+from BaseAgentTool import BaseAgentTool
+
+class GreetTool(BaseAgentTool):
+    def __init__(self, conn):
+        super().__init__(conn)
+        self.name = "Greet"
+        self.description = "用名字作为参数问候一个人"
+        self.params = {
+            "name": {
+                "type": "string",
+                "description": "要问候的人的名字",
+                "required": True
+            }
+        }
+
+    def doFunc(self, name: str) -> str:
+        """Greet a person by their name."""
+        return f"Hello, {name}!"
