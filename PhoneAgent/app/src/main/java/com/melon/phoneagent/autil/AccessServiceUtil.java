@@ -26,8 +26,6 @@ public class AccessServiceUtil {
 
 //	static protected APhoneInterface mCurrentPhone = null;
 
-	static public boolean redrawWhenNull = true;
-
 	static AccessibilityService mService = null;
 
 	public static void enableSleepActive(boolean enable) {
